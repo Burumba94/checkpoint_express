@@ -1,3 +1,4 @@
+const http = require ('http');
 const express = require('express');
 const app = express();
 const port = 4000;
@@ -8,7 +9,7 @@ const checkWorkingHours = (req, res, next) => {
   const dayOfWeek = now.getDate(); 
   const hourOfWeek = now.getHours();
 
-  if (dayOfWeek >= 1 && dayOfWeek <= 6 && hourOfWeek >= 9 && hourOfWeek < 1){
+  if (dayOfWeek >= 1 && dayOfWeek <= 5 && hourOfWeek >= 9 && hourOfWeek < 17){
     next();
   } else {
     res.send('Le site est disponible uniquement pendant les heures et les jours ouvrables !');
@@ -34,6 +35,8 @@ app.get('/services', (req, res) => {
 app.get('/contact', (req, res) => {
   res.render('contact', {title: 'Nous Contacter'});
 });
+
+const server = http.createServer(app);
 
 app.listen(port, () => {
   console.log('Le serveur écoute sur le port ${port}');
